@@ -224,3 +224,6 @@ __marimo__/
 
 # Estado da última execução
 ultimo_estado.json
+
+# Registro das execuções
+execucoes.log
