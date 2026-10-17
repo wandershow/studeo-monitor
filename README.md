@@ -1,21 +1,6 @@
 
 ---
 
-## Sobre o desenvolvimento
-
-Projeto feito em paralelo à graduação em Análise e Desenvolvimento de Sistemas,
-com o **Claude** (IA da Anthropic) como mentor: explicando cada conceito, revisando
-o código e ajudando a interpretar cada mensagem de erro.
-
-Todo o código foi digitado à mão, como faziam os Incas e os Maias. Quando eu travava,
-comparava minha versão com a sugestão do mentor e ajustava o meu código, na tentativa
-e erro, até entender a diferença. Cada erro de digitação, indentação e parêntese
-esquecido foi lido, entendido e corrigido por mim, e muitos viraram lições (e testes)
-deste projeto.
-
-Feito por **Wanderson Silva**.
-
-
 # Studeo Monitor
 
 Robô em Python que acessa o Studeo (ambiente de estudos da Unicesumar), verifica as
@@ -116,5 +101,20 @@ pytest -v                     # roda os testes
 
 ---
 
-Feito por **Wanderson Silva** durante a graduação em Análise e Desenvolvimento de Sistemas.
+
+## Sobre o desenvolvimento
+
+Projeto feito em paralelo à graduação em Análise e Desenvolvimento de Sistemas,
+com o **Claude** (IA da Anthropic) como mentor: explicando cada conceito, revisando
+o código e ajudando a interpretar cada mensagem de erro.
+
+Todo o código foi digitado à mão, como faziam os Incas e os Maias. Quando eu travava,
+comparava minha versão com a sugestão do mentor e ajustava o meu código, na tentativa
+e erro, até entender a diferença. Cada erro de digitação, indentação e parêntese
+esquecido foi lido, entendido e corrigido por mim, e muitos viraram lições (e testes)
+deste projeto.
+
+Feito por **Wanderson Silva**.
+
+
 
