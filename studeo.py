@@ -7,6 +7,8 @@ from notificador import enviar_whatsapp
 from pendencias import formatar_mensagem, interpretar_linha
 
 from historico import houve_mudanca, salvar_atual
+import sys
+from datetime import datetime
 
 URL_LOGIN = "https://studeo.unicesumar.edu.br/#!/access/login"
 
@@ -40,17 +42,29 @@ def ler_atividades(pagina) -> list[str]:
 
 
 def main() -> None:
+    print(f"\n=== Execução em {datetime.now():%d/%m/%Y %H:%M} ===")
     config = carregar_config()
 
+    # com "--visivel" o navegador aparece.sem isso, roda invisivel.
+    visivel = "--visivel" in sys.argv
+
     with sync_playwright() as p:
-        navegador = p.chromium.launch(headless=False, slow_mo=500)
+        navegador = p.chromium.launch(
+            headless=not visivel, slow_mo=500 if visivel else 0
+        )
         pagina = navegador.new_page()
 
-        fazer_login(pagina, config["STUDEO_USUARIO"], config["STUDEO_SENHA"])
-        linhas = ler_atividades(pagina)
+        try:
+            fazer_login(pagina, config["STUDEO_USUARIO"], config["STUDEO_SENHA"])
+            linhas = ler_atividades(pagina)
+        except Exception as erro:
+            pagina.screenshot(path="erro.png")
+            enviar_whatsapp(f"⚠️ O monitor do Studeo falhou: {str(erro)[:300]}")
+            raise
+        finally:
+            navegador.close()
 
-        navegador.close()
-    # Daqui para baixo nao precisamos mais usar o navegador
+    # Daqui para baixo não usamos mais o navegador, então pode ficar fora do "with".
     pendencias = []
     for linha in linhas:
         item = interpretar_linha(linha)
@@ -61,7 +75,7 @@ def main() -> None:
         enviar_whatsapp(formatar_mensagem(pendencias))
         salvar_atual(pendencias)
     else:
-        print("Nada mudou desde o ultimo aviso. nenhuma mensagem Enviada")
+        print("Nada mudou desde o ultimo aviso. Nenhuma mensagem enviada.")
 
 
 if __name__ == "__main__":
