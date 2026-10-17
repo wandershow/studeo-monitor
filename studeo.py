@@ -6,6 +6,8 @@ from config import carregar_config
 from notificador import enviar_whatsapp
 from pendencias import formatar_mensagem, interpretar_linha
 
+from historico import houve_mudanca, salvar_atual
+
 URL_LOGIN = "https://studeo.unicesumar.edu.br/#!/access/login"
 
 
@@ -48,16 +50,18 @@ def main() -> None:
         linhas = ler_atividades(pagina)
 
         navegador.close()
-
-    # Daqui para baixo não usamos mais o navegador, então pode ficar fora do "with".
+    # Daqui para baixo nao precisamos mais usar o navegador
     pendencias = []
     for linha in linhas:
         item = interpretar_linha(linha)
         if item:
             pendencias.append(item)
 
-    mensagem = formatar_mensagem(pendencias)
-    enviar_whatsapp(mensagem)
+    if houve_mudanca(pendencias):
+        enviar_whatsapp(formatar_mensagem(pendencias))
+        salvar_atual(pendencias)
+    else:
+        print("Nada mudou desde o ultimo aviso. nenhuma mensagem Enviada")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,22 @@
+[
+  {
+    "disciplina": "PROGRAMAÇÃO AVANÇADA",
+    "quantidade": 1,
+    "data": "25/10/26 23:59"
+  },
+  {
+    "disciplina": "SEMANA DE CONHECIMENTOS GERAIS - ANÁLISE E DESENVOLVIMENTO DE SISTEMAS - 2026/54",
+    "quantidade": 1,
+    "data": "15/11/26 23:59"
+  },
+  {
+    "disciplina": "PROJETO DE ENSINO - KIBANA: VISUALIZAÇÃO DE DADOS E DASHBOARDS - 54/2026",
+    "quantidade": 1,
+    "data": "29/11/26 23:59"
+  },
+  {
+    "disciplina": "PROJETO DE ENSINO - LGPD NAS ORGANIZAÇÕES E EMPRESAS - 54/2026",
+    "quantidade": 1,
+    "data": "29/11/26 23:59"
+  }
+]

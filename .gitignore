@@ -221,3 +221,6 @@ __marimo__/
 
 # Prints gerados pelo robô
 *.png
+
+# Estado da última execução
+ultimo_estado.json
