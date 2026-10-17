@@ -7,7 +7,7 @@ from config import carregar_config
 URL_LOGIN = "https://studeo.unicesumar.edu.br/#!/access/login"
 
 
-def fazer_login(pagina, usuario: str, senha: str) ->None:
+def fazer_login(pagina, usuario: str, senha: str) -> None:
     """preenche o formulario de login e espera sair da tela de login"""
     pagina.goto(URL_LOGIN)
 
@@ -15,8 +15,24 @@ def fazer_login(pagina, usuario: str, senha: str) ->None:
     pagina.get_by_role("textbox", name="Senha").fill(senha)
     pagina.get_by_role("button", name="ENTRAR").click()
 
-    #Se o login deu certo, o endereço deixa de ter "access/login".
+    # Se o login deu certo, o endereço deixa de ter "access/login".
     pagina.wait_for_url(lambda url: "access/login" not in url, timeout=30000)
+
+
+def ler_atividades(pagina) -> list[str]:
+    """Abre o painel de atividades e devolve o texto de cada linha da tabela."""
+    pagina.get_by_role("link", name="Acompanhamento de Atividades").click()
+
+    tabela = pagina.get_by_role("table")
+    tabela.wait_for(timeout=15000)
+
+    atividades = []
+    for linha in tabela.get_by_role("row").all():
+        texto = " ".join(linha.inner_text().split())
+        if texto:
+            atividades.append(texto)
+
+    return atividades
 
 
 def main() -> None:
@@ -27,13 +43,15 @@ def main() -> None:
         pagina = navegador.new_page()
 
         fazer_login(pagina, config["STUDEO_USUARIO"], config["STUDEO_SENHA"])
-        print("lOGIN FEITO! endereço atual:", pagina.url)
+        print("LOGIN FEITO! endereço atual:", pagina.url)
 
-        pagina.wait_for_timeout(5000)
-        pagina.screenshot(path="pos_login.png")
+        atividades = ler_atividades(pagina)
+        print(f"\n{len(atividades)} linha(s) encontradas:")
+        for item in atividades:
+            print("-", item)
 
         navegador.close()
 
+
 if __name__ == "__main__":
     main()
-
